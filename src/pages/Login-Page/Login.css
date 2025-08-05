@@ -1,0 +1,23 @@
+body
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signup-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    background-color: #0b0c10;
+    height: 85vh;
+    width: 85vw;
+
+}
+
+.right-signup-side
+{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
