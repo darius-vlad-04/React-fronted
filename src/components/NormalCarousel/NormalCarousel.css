@@ -1,0 +1,79 @@
+/* src/components/NormalCarousel/NormalCarousel.css */
+
+/*
+  1. The main container for the slider.
+  We use a percentage width and 'margin: auto' to center it on the page.
+  'position: relative' is crucial so we can position the arrows relative to it.
+*/
+.slider-container {
+    width: 85%; /* Adjust this to control the overall width of the carousel area */
+    margin: 2rem auto 0; /* Adds top margin and centers the container horizontally */
+    position: relative;
+}
+
+/*
+  2. Add some spacing between the individual cards for a cleaner look.
+  The '.slick-slide > div' targets the direct wrapper of your <PresentationCard>.
+*/
+.slick-slide > div {
+    padding: 0 15px; /* Creates a gutter between slides */
+}
+
+/*
+  3. Slick track adjustments for center mode.
+  This ensures the slides align correctly without unwanted offsets.
+*/
+.slick-track {
+    display: flex;
+    align-items: stretch; /* Ensures all cards have the same height */
+}
+
+/*
+  4. Styling for the navigation arrows.
+  We override the default styles to position them precisely where we want.
+*/
+.slick-prev,
+.slick-next {
+    position: absolute;
+    top: 40%; /* Position arrows vertically in the middle of the cards, adjust as needed */
+    transform: translateY(-50%);
+    z-index: 1; /* Ensure arrows are above the slides */
+    height: 50px;
+    width: 50px;
+}
+
+/*
+  5. Specific positioning for each arrow.
+  Using negative values pushes them slightly outside the slide area for a cleaner look.
+*/
+.slick-prev {
+    left: -60px; /* Adjust this value to control space on the left */
+}
+
+.slick-next {
+    right: -60px; /* Adjust this value to control space on the right */
+}
+
+/*
+  6. Styling the arrow's icon (the actual '>' symbol).
+*/
+.slick-prev::before,
+.slick-next::before {
+    font-size: 30px; /* Make the arrow icon larger */
+    color: white;
+    opacity: 0.8;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.slick-prev:hover::before,
+.slick-next:hover::before {
+    opacity: 1;
+}
+
+
+/*
+  7. Custom position for the dots at the bottom.
+*/
+.slick-dots {
+    bottom: -40px; /* Move dots down, outside of the card area */
+}

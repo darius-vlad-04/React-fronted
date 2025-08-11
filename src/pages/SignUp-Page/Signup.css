@@ -1,5 +1,5 @@
 
-.login-window
+.signup-window
 {
     background-color: #1f2833;
     width: 100%;
@@ -8,7 +8,7 @@
     justify-content: center;
     align-items: center;
 }
-.login-container {
+.signup-container {
     display: flex;
     flex-direction: row;
     background-color: #0b0c10;
@@ -21,7 +21,7 @@
 }
 
 
-.left-login-side {
+.left-signup-side {
     flex: 1;
     height: 100%;
     width: 50%;
@@ -29,7 +29,7 @@
     box-sizing: border-box;
 }
 
-.right-login-side {
+.right-signup-side {
     flex: 1;
     display: flex;
     flex-direction: column;

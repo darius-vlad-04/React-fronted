@@ -1,13 +1,22 @@
 import './App.css'
-import Login from "./pages/Login-Page/Login.tsx";
+import Signup from "./pages/SignUp-Page/Signup.tsx";
+import Login from "./pages/Login-Page/Login.tsx"
+import Home from "./pages/Home-Page/Home.tsx"
 import {BrowserRouter, Route, Routes} from "react-router-dom";
+import MyProfilePage from "./pages/MyProfile-Page/MyProfile.tsx";
+import UserPage from "./pages/User-Page/UserPage.tsx";
+
 
 function App() {
 
     return (
         <BrowserRouter>
             <Routes>
+                <Route path="/signup" element={<Signup></Signup>}></Route>
                 <Route path="/login" element={<Login></Login>}></Route>
+                <Route path="/home" element={<Home></Home>}></Route>
+                <Route path="/my-profile" element={<MyProfilePage></MyProfilePage>}></Route>
+                <Route path="/user/:id" element={<UserPage></UserPage>}></Route>
             </Routes>
         </BrowserRouter>
     )

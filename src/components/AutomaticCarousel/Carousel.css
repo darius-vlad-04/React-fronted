@@ -1,0 +1,24 @@
+
+.carousel-wrapper {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+
+.carousel-wrapper .slick-slider,
+.carousel-wrapper .slick-list,
+.carousel-wrapper .slick-track,
+.carousel-wrapper .slick-slide,
+.carousel-wrapper .slick-slide > div {
+    height: 100%;
+}
+
+
+.signup-illustration {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: fill;
+}

@@ -1,17 +1,17 @@
-import "./Login.css";
+import "./Signup.css";
 import {Box, Button, CircularProgress, Typography} from "@mui/material";
 import * as React from "react";
 
 
 import StyledTextField from "../../components/CustomTextFields/StyledTextField.tsx";
 import PasswordField from "../../components/CustomTextFields/PasswordFields.tsx";
+import type {UserCreationInterface} from "../../models/user-models/userCreationInterface.ts";
+import {signup} from "../../services/authService.ts";
 import Carousel from "../../components/AutomaticCarousel/Carousel.tsx";
-import {login} from "../../services/authService.ts";
-import {useNavigate} from "react-router-dom";
 
 
-export default function Login() {
-    const navigate = useNavigate();
+export default function Signup() {
+    const [username, setUsername] = React.useState<string>('');
     const [email, setEmail] = React.useState<string>('');
     const [password, setPassword] = React.useState<string>('');
     const [loading, setLoading] = React.useState<boolean>(false);
@@ -20,10 +20,9 @@ export default function Login() {
         event.preventDefault();
         try {
             setLoading(true);
-            const credentials = {email: email, password: password}
-            const response = await login(credentials);
-            console.log('Login successful:', response.data);
-            navigate('/home');
+            const userData: UserCreationInterface = {name: username, email: email, password: password};
+            const response = await signup(userData);
+            console.log('Signup successful:', response.data);
         } catch (e) {
             if (e instanceof Error)
                 console.log(e.message)
@@ -32,21 +31,26 @@ export default function Login() {
         }
     }
     return (
-        <div className="login-window">
-            <div className="login-container">
-                <div className="left-login-side">
+        <div className="signup-window">
+            <div className="signup-container">
+                <div className="left-signup-side">
                     <Carousel></Carousel>
                 </div>
 
-                <form className="right-login-side" onSubmit={handleSubmit}>
+                <form className="right-signup-side" onSubmit={handleSubmit}>
                     <Box sx={{width: '100%'}}>
-                        <h1>Login to your account</h1>
+                        <h1>Create an account</h1>
                         <Typography variant="subtitle1" sx={{color: 'grey.500'}}>
-                            Already have an account? <a href="/signup"
-                                                        style={{color: '#45a29e', textDecoration: 'none'}}>Signup</a>
+                            Already have an account? <a href="/login"
+                                                        style={{color: '#45a29e', textDecoration: 'none'}}>Login.</a>
                         </Typography>
                     </Box>
 
+                    <StyledTextField
+                        label="Username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
 
                     <StyledTextField
                         label="Email"
@@ -76,7 +80,7 @@ export default function Login() {
                             fontWeight: "bold"
                         }}
                     >
-                        {loading ? <CircularProgress size={24} sx={{color: 'white'}}/> : 'Login'}
+                        {loading ? <CircularProgress size={24} sx={{color: 'white'}}/> : 'Signup'}
                     </Button>
                 </form>
             </div>
