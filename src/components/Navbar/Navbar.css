@@ -32,6 +32,7 @@ a {
     color: white;
     display: flex;
     gap: 1.2rem;
+    align-items: center;
 }
 
 
@@ -59,4 +60,9 @@ a::before {
 
 a:hover:before {
     transform: scaleX(1);
+}
+
+
+.avatar-section a::before {
+    content: none;
 }

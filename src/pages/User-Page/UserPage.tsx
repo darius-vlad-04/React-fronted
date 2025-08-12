@@ -4,7 +4,6 @@ import Navbar from "../../components/Navbar/Navbar.tsx";
 
 import "./UserPage.css";
 import ProfileHeader from "../../components/ProfileHeader/ProfileHeader.tsx";
-import {Button} from "@mui/material";
 import {useParams} from "react-router-dom";
 import {useUserById} from "../../hooks/useUserById.ts";
 import UserStartups from "../../components/UserStartups/UserStartups.tsx";
@@ -32,10 +31,6 @@ export default function UserPage() {
                 <section className="profile-description">
                     <div className="description-upper">
                         <h2 className="description-title">About Me</h2>
-                        <Button className="edit-description-button" variant="contained" sx={{
-                            fontWeight: 700,
-                            backgroundColor: "red",
-                        }}>Edit</Button>
                     </div>
                     <p className="description-text">
                         {user?.profile_bio}

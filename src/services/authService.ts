@@ -9,6 +9,11 @@ export const signup = async (userData: UserCreationInterface) => {
     return axios.post(signupUrl, userData);
 };
 
+export const logout = async () => {
+
+    const logoutUrl = `${API_URL}/logout`
+    return axios.post(logoutUrl, {}, { withCredentials: true });
+}
 
 export const login = (credentials: { email: string; password: string }) => {
     const loginEndpoint = `${API_URL}/login`;
@@ -18,3 +23,5 @@ export const login = (credentials: { email: string; password: string }) => {
             withCredentials: true,
         });
 };
+
+

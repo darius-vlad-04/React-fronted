@@ -124,3 +124,23 @@
     color: #6c757d;
     margin-top: 0.5rem;
 }
+
+
+.name-editor {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+}
+
+
+.name-editor .MuiInputBase-root {
+    font-size: 2em;
+    font-weight: bold;
+    font-family: inherit;
+    line-height: 1.2;
+}
+
+.name-editor .MuiInput-underline:before,
+.name-editor .MuiInput-underline:after {
+    border-bottom: 2px solid #ccc;
+}

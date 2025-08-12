@@ -5,6 +5,7 @@ import Home from "./pages/Home-Page/Home.tsx"
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import MyProfilePage from "./pages/MyProfile-Page/MyProfile.tsx";
 import UserPage from "./pages/User-Page/UserPage.tsx";
+import Startup from "./pages/Startup-Page/Startup.tsx";
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
                 <Route path="/home" element={<Home></Home>}></Route>
                 <Route path="/my-profile" element={<MyProfilePage></MyProfilePage>}></Route>
                 <Route path="/user/:id" element={<UserPage></UserPage>}></Route>
+                <Route path = "/startup/:id" element={<Startup></Startup>}></Route>
             </Routes>
         </BrowserRouter>
     )
