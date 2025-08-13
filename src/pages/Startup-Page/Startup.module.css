@@ -8,10 +8,7 @@
     display: grid;
 
     grid-template-columns: 2fr 1fr;
-
-
-    grid-template-rows: repeat(2, minmax(400px, 40vh));
-
+    grid-template-rows: minmax(400px, 40vh) auto;
     gap: 2rem;
     padding: 2rem;
     max-width: 1400px;
@@ -33,6 +30,7 @@
 
 .div4 {
     grid-area: 2 / 2 / 3 / 3;
+
 }
 
 
@@ -47,6 +45,9 @@
     overflow: hidden;
 }
 
+.div3 {
+    color: black;
+}
 
 .div1, .div3 {
     overflow-y: auto;
@@ -99,8 +100,9 @@
 
 .div2 {
     color: black;
+    position: sticky;
+    top: 0;
 }
-
 
 .div3 h3 {
     font-size: 1.8rem;
@@ -113,6 +115,9 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    height: 40vh;
+    position: sticky;
+    top: calc(40vh + 4rem);
 }
 
 .donate-button {
@@ -190,6 +195,15 @@
     to {
         transform: rotate(360deg);
     }
+}
+
+
+.perks-grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+
+    justify-content: flex-start;
 }
 
 @media (max-width: 900px) {

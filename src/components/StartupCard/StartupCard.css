@@ -53,3 +53,26 @@
     background-color: #d6d6d6;
     border-radius: 4px;
 }
+
+
+.view-startup-button {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    margin-top: 1rem;
+    background: linear-gradient(to right, #45a29e, #66fcf1);
+    color: #0b0c10;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.view-startup-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(69, 162, 158, 0.4);
+}

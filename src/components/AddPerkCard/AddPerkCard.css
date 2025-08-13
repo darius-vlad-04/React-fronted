@@ -1,0 +1,26 @@
+.add-perk-card-container {
+    width: 320px;
+    min-height: 450px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    border: 3px dashed #d1d5db;
+    border-radius: 24px;
+    background-color: #f9fafb;
+    cursor: pointer;
+    color: #6b7280;
+    transition: all 0.2s ease;
+}
+
+.add-perk-card-container:hover {
+    border-color: #14B8A6;
+    background-color: #f0fdfa;
+    color: #134E4A;
+}
+
+.add-perk-icon {
+    font-size: 4rem !important;
+}
