@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import Navbar from '../../components/Navbar/Navbar.tsx';
-import {TextField, Button, InputAdornment, CircularProgress} from '@mui/material';
+import {TextField, Button, InputAdornment, CircularProgress, Chip, Box} from '@mui/material';
 
 
 import styles from './CreateStartup.module.css';
@@ -21,7 +21,8 @@ export default function CreateStartupPage() {
     const [description, setDescription] = useState('');
     const [fundingGoal, setFundingGoal] = useState<number | string>('');
     const [perks, setPerks] = useState<PerkCreationInterface[]>([]);
-
+    const [tags, setTags] = useState<string[]>([]);
+    const [currentTag, setCurrentTag] = useState('');
 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitError, setSubmitError] = useState<string | null>(null);
@@ -49,6 +50,23 @@ export default function CreateStartupPage() {
         setPerks(newPerks);
     };
 
+    const handleTagKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            const newTag = currentTag.trim();
+
+            if (newTag && !tags.includes(newTag)) {
+                setTags([...tags, newTag]);
+            }
+
+            setCurrentTag('');
+        }
+    };
+
+    const handleDeleteTag = (tagToDelete: string) => {
+        setTags(tags.filter((tag) => tag !== tagToDelete));
+    };
+
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -66,6 +84,7 @@ export default function CreateStartupPage() {
                 name,
                 description,
                 funding_goal: Number(fundingGoal),
+                tags: tags,
             };
 
             const newStartup = await createStartup(startupPayload);
@@ -166,6 +185,62 @@ export default function CreateStartupPage() {
                             '& .MuiFormHelperText-root': {color: 'rgba(255, 255, 255, 0.6)'},
                         }}
                     />
+
+                    <div className={styles['tags-section']}>
+                        <TextField
+                            label="Tags (press Enter to add)"
+                            variant="outlined"
+                            fullWidth
+                            value={currentTag}
+                            onChange={(e) => setCurrentTag(e.target.value)}
+                            onKeyDown={handleTagKeyDown} // Important: handles the Enter key
+                            helperText="Add relevant tags to improve discoverability."
+                            sx={{
+                                '& .MuiInputBase-input': {color: 'white'},
+                                '& .MuiInputLabel-root': {color: 'rgba(255, 255, 255, 0.7)'},
+                                '& .MuiInputLabel-root.Mui-focused': {color: 'white'},
+                                '& .MuiOutlinedInput-root': {
+                                    '& fieldset': {borderColor: 'rgba(255, 255, 255, 0.5)'},
+                                    '&:hover fieldset': {borderColor: 'white'},
+                                    '&.Mui-focused fieldset': {borderColor: 'white'},
+                                },
+                                '& .MuiFormHelperText-root': {color: 'rgba(255, 255, 255, 0.6)'},
+                            }}
+                        />
+
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexWrap: 'wrap',
+                                gap: 0.5,
+                                marginTop: 1,
+                            }}
+                        >
+
+                            {tags.map((tag, index) => (
+                                <Chip
+                                    key={index}
+                                    label={tag}
+                                    onDelete={() => handleDeleteTag(tag)}
+                                    variant="outlined"
+                                    sx={{
+                                        color: 'rgba(255, 255, 255, 0.87)',
+                                        borderColor: 'rgba(255, 255, 255, 0.5)',
+                                        '&:hover': {
+                                            backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                                            borderColor: 'rgba(255, 255, 255, 0.87)',
+                                        },
+                                        '& .MuiChip-deleteIcon': {
+                                            color: 'rgba(255, 255, 255, 0.5)',
+                                            '&:hover': {
+                                                color: 'rgba(255, 255, 255, 0.87)',
+                                            },
+                                        },
+                                    }}
+                                />
+                            ))}
+                        </Box>
+                    </div>
 
                 </div>
 

@@ -1,6 +1,6 @@
 .add-perk-card-container {
     width: 320px;
-    min-height: 450px;
+    min-height: 380px;
 
     display: flex;
     flex-direction: column;

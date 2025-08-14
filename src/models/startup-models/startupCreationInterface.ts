@@ -3,4 +3,5 @@ export interface StartupCreationInterface {
     name: string;
     description: string;
     funding_goal: number;
+    tags?: string[];
 }

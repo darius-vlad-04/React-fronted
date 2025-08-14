@@ -1,7 +1,7 @@
 import styles from "./Startup.module.css"
 import Navbar from "../../components/Navbar/Navbar.tsx";
 import {useStartupById} from "../../hooks/useStartupById.ts";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import userAvatarPlaceholder from '../../assets/user-avatar.jpg';
 import {useUserById} from "../../hooks/useUserById.ts";
 import {usePerksForStartup} from "../../hooks/usePerksForStartup.ts";
@@ -12,6 +12,7 @@ import ProgressBar from "../../components/ProgressBar/ProgressBar.tsx";
 export default function Startup() {
     const {id} = useParams();
     const BASE_BACKEND_URL = import.meta.env.VITE_API_URL;
+    const navigate = useNavigate();
 
     const {startup, isLoadingStartup, errorStartup} = useStartupById(id!);
     const founderId = startup?.founder_id || null;
@@ -19,6 +20,7 @@ export default function Startup() {
     const {perks, isLoadingPerks, errorPerks} = usePerksForStartup(id!);
 
     const imageUrl = `${BASE_BACKEND_URL}/uploads/${user?.profile_pic_path}`;
+
 
     if (isLoadingStartup || isLoadingUser) {
 
@@ -55,7 +57,12 @@ export default function Startup() {
                         <div className={styles['profile-avatar']}>
                             <img src={user?.profile_pic_path === null ? userAvatarPlaceholder : imageUrl}
                                  alt={`${user?.name}'s profile`}/>
-                            <div className={styles['avatar-overlay']}>
+                            <div className={styles['avatar-overlay']} onClick={() => {
+                                console.log(founderId)
+                                if (founderId) {
+                                    navigate(`/user/${founderId}`);
+                                }
+                            }}>
                                 <span>{user?.name}</span>
                             </div>
                         </div>
