@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import {fetcher} from "../services/fetchService.ts";
-import type {StartupInterface} from "../models/startupInterface.ts";
+import type {StartupInterface} from "../models/startup-models/startupInterface.ts"
 
 export function useStartupsForUserWithId(id: string | null) {
 

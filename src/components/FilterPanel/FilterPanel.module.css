@@ -1,0 +1,178 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(11, 12, 16, 0.8);
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.panel {
+    width: 380px;
+    height: 100%;
+    background-color: #1f2833;
+    border-left: 1px solid #2e3a48;
+    display: flex;
+    flex-direction: column;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 1.75rem;
+    border-bottom: 1px solid #2e3a48;
+    flex-shrink: 0;
+}
+
+.header h2 {
+    color: #ffffff;
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    color: #c5c6c7;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.closeButton:hover {
+    color: #66fcf1;
+    transform: rotate(90deg);
+}
+
+.content {
+    padding: 1.75rem;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.filterSection {
+    margin-bottom: 2rem;
+}
+
+.sectionTitle {
+    color: #66fcf1;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.optionsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+
+.checkboxLabel, .radioLabel {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: #c5c6c7;
+    font-size: 1rem;
+}
+
+.checkboxLabel input, .radioLabel input {
+    opacity: 0;
+    position: absolute;
+}
+
+.customCheckbox {
+    width: 22px;
+    height: 22px;
+    background-color: #2e3a48;
+    border: 2px solid #45a29e;
+    border-radius: 4px;
+    margin-right: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s ease;
+}
+
+.checkboxLabel input:checked + .customCheckbox {
+    background-color: #66fcf1;
+}
+
+.customCheckbox::after {
+    content: '✔';
+    color: #1f2833;
+    font-size: 14px;
+    font-weight: bold;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.checkboxLabel input:checked + .customCheckbox::after {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Custom Radio */
+.customRadio {
+    width: 22px;
+    height: 22px;
+    background-color: #2e3a48;
+    border: 2px solid #45a29e;
+    border-radius: 50%;
+    margin-right: 12px;
+    display: grid;
+    place-content: center;
+    transition: background-color 0.2s ease;
+}
+
+.customRadio::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #66fcf1;
+    transform: scale(0);
+    transition: transform 0.2s ease;
+}
+
+.radioLabel input:checked + .customRadio::before {
+    transform: scale(1);
+}
+
+.footer {
+    padding: 1.5rem 1.75rem;
+    border-top: 1px solid #2e3a48;
+    flex-shrink: 0;
+}
+
+.applyButton {
+    width: 100%;
+    padding: 0.9rem;
+    background: linear-gradient(to right, #45a29e, #66fcf1);
+    color: #0b0c10;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.applyButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 252, 241, 0.25);
+}

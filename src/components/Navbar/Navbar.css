@@ -1,68 +1,122 @@
-a:link {
-    text-decoration: none;
-
-}
-
-a {
-    color: white;
-    position: relative;
-    font-weight: bold;
-}
 
 .nav-bar {
     background-color: #1f2833;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 0.75rem 2.5rem;
+    height: 70px;
+    border-bottom: 1px solid #2e3a48;
 }
 
+
 .nav-left {
-    margin-left: 1rem;
     display: flex;
     align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+}
+
+.logo {
+    height: 45px;
+    width: auto;
 }
 
 .product-name {
-    color: white;
+    color: #ffffff;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0;
 }
 
 .links {
-    margin-right: 2rem;
-    float: right;
-    color: white;
     display: flex;
-    gap: 1.2rem;
+    gap: 2rem;
     align-items: center;
 }
 
-
-.banner img {
-    width: 10%;
-    height: 10%;
+.links a {
+    color: #c5c6c7;
+    position: relative;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s ease;
 }
 
-a:hover {
-    color: white;
+.links a:hover {
+    color: #66fcf1;
 }
 
-a::before {
+
+.links > a::before {
     content: "";
     position: absolute;
     display: block;
     width: 100%;
     height: 2px;
-    bottom: 0;
+    bottom: -5px;
     left: 0;
     background-color: #66fcf1;
     transform: scaleX(0);
+    transform-origin: center;
     transition: transform 0.3s ease;
 }
 
-a:hover:before {
+.links > a:hover::before {
     transform: scaleX(1);
 }
 
 
-.avatar-section a::before {
+.auth-links {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav-link-secondary {
+    padding: 0.5rem 1rem;
+}
+
+.nav-link-primary {
+    background-color: #45a29e;
+    color: #0b0c10 !important;
+    font-weight: 600;
+    padding: 0.6rem 1.2rem;
+    border-radius: 50px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.nav-link-primary:hover {
+    background-color: #66fcf1;
+    transform: translateY(-2px);
+    color: #0b0c10 !important;
+}
+
+.nav-link-primary::before, .nav-link-secondary::before {
     content: none;
+}
+
+
+.popper-menu {
+    z-index: 1301;
+}
+
+
+.popper-menu .MuiPaper-root {
+    background-color: #2e3a48 !important;
+    border: 1px solid #45a29e !important;
+    border-radius: 8px !important;
+    margin-top: 8px !important;
+}
+
+
+.popper-menu .MuiMenuItem-root {
+    color: #c5c6c7 !important;
+    font-weight: 500 !important;
+    padding: 10px 20px !important;
+    transition: background-color 0.2s ease !important;
+}
+
+.popper-menu .MuiMenuItem-root:hover {
+    background-color: rgba(69, 162, 158, 0.4) !important;
 }

@@ -6,4 +6,5 @@ export interface StartupInterface {
     funding_goal: number;
     created_at: Date;
     current_funding: number;
+    tags: string[];
 }

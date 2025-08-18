@@ -7,17 +7,18 @@ import {useUserById} from "../../hooks/useUserById.ts";
 import {usePerksForStartup} from "../../hooks/usePerksForStartup.ts";
 import PerksCard from "../../components/PerksCard/PerksCard.tsx";
 import ProgressBar from "../../components/ProgressBar/ProgressBar.tsx";
+import TagContainer from "../../components/TagContainer/TagContainer.tsx";
 
 
 export default function Startup() {
     const {id} = useParams();
     const BASE_BACKEND_URL = import.meta.env.VITE_API_URL;
     const navigate = useNavigate();
+    const {startup: startup, isLoading: isLoadingStartup, isError: errorStartup} = useStartupById(id!);
 
-    const {startup, isLoadingStartup, errorStartup} = useStartupById(id!);
     const founderId = startup?.founder_id || null;
-    const {user, isLoadingUser, errorUser} = useUserById(founderId);
-    const {perks, isLoadingPerks, errorPerks} = usePerksForStartup(id!);
+    const {user, isLoading: isLoadingUser, isError: errorUser} = useUserById(founderId);
+    const {perks, isLoading: isLoadingPerks, isError: errorPerks} = usePerksForStartup(id!);
 
     const imageUrl = `${BASE_BACKEND_URL}/uploads/${user?.profile_pic_path}`;
 
@@ -50,6 +51,7 @@ export default function Startup() {
                     <h3>Invest now in the future!</h3>
                     <h1>{startup?.name || "Loading..."}</h1>
                     <h2>{startup?.description || "Loading description..."}</h2>
+                    <TagContainer tags={startup?.tags || []}/>
                 </div>
 
                 <div className={styles.div2}>
