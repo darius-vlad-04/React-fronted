@@ -20,7 +20,7 @@ function Carousel() {
     };
 
     return (
-            <div className= "carousel-wrapper">
+        <div className= "carousel-wrapper">
             <Slider {...settings}>
                 <div>
                     <img className="signup-illustration" src={animatedPicture} alt="illustration"/>
@@ -32,7 +32,7 @@ function Carousel() {
                     <img className="signup-illustration" src={animatedPicture3} alt="illustration3"/>
                 </div>
             </Slider>
-            </div>
+        </div>
 
     );
 }

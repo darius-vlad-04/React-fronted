@@ -1,0 +1,49 @@
+.startups-container {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.startups-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #2e3a48;
+}
+
+.startups-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0;
+}
+
+.create-startup-button {
+    background: linear-gradient(to right, #45a29e, #66fcf1);
+    color: #0b0c10;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.create-startup-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 252, 241, 0.25);
+}
+
+.startups-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+.no-startups-message {
+    color: #8f9296;
+   font-style: italic;
+    grid-column: 1 / -1;
+}

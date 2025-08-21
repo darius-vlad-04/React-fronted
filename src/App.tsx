@@ -8,6 +8,7 @@ import UserPage from "./pages/User-Page/UserPage.tsx";
 import Startup from "./pages/Startup-Page/Startup.tsx";
 import CreateStartup from "./pages/CreateStartup-Page/CreateStartup.tsx";
 import ExploreStartups from "./pages/ExploreStartups-Page/ExploreStartups.tsx";
+import Leaderboard from './pages/Leaderboard-Page/LeaderBoard.tsx';
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
                 <Route path = "/startup/:id" element={<Startup></Startup>}></Route>
                 <Route path = "/startup/create" element={<CreateStartup></CreateStartup>}></Route>
                 <Route path = "/explore" element = {<ExploreStartups></ExploreStartups>}></Route>
+                <Route path = "/leaderboard" element = {<Leaderboard></Leaderboard>}></Route>
             </Routes>
         </BrowserRouter>
     )

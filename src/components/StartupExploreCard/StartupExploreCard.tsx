@@ -12,7 +12,7 @@ interface StartupCardProps {
 export default function StartupExploreCard({startup}: StartupCardProps) {
     const navigate = useNavigate();
     const founderId = startup?.founder_id || null;
-    const {user: founder, isFounderLoading, isFounderError} = useUserById(founderId)
+    const {user: founder, isLoading: isFounderLoading, isError: isFounderError} = useUserById(founderId)
 
 
     const BASE_BACKEND_URL = import.meta.env.VITE_API_URL;

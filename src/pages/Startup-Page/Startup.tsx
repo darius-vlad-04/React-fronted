@@ -8,20 +8,64 @@ import {usePerksForStartup} from "../../hooks/usePerksForStartup.ts";
 import PerksCard from "../../components/PerksCard/PerksCard.tsx";
 import ProgressBar from "../../components/ProgressBar/ProgressBar.tsx";
 import TagContainer from "../../components/TagContainer/TagContainer.tsx";
+import {useState} from "react";
+import {createDonation} from "../../services/donationService.ts";
+import {Button, CircularProgress, InputAdornment, TextField} from "@mui/material";
 
 
 export default function Startup() {
     const {id} = useParams();
     const BASE_BACKEND_URL = import.meta.env.VITE_API_URL;
     const navigate = useNavigate();
-    const {startup: startup, isLoading: isLoadingStartup, isError: errorStartup} = useStartupById(id!);
+    const {startup: startup, isLoading: isLoadingStartup, isError: errorStartup, mutateStartup} = useStartupById(id!);
 
     const founderId = startup?.founder_id || null;
     const {user, isLoading: isLoadingUser, isError: errorUser} = useUserById(founderId);
     const {perks, isLoading: isLoadingPerks, isError: errorPerks} = usePerksForStartup(id!);
 
+
     const imageUrl = `${BASE_BACKEND_URL}/uploads/${user?.profile_pic_path}`;
 
+    const [isDonating, setIsDonating] = useState(false);
+    const [donationAmount, setDonationAmount] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [donationError, setDonationError] = useState<string | null>(null);
+
+
+    const handleFundClick = () => {
+        setIsDonating(true);
+    };
+
+    const handleCancelDonation = () => {
+        setIsDonating(false);
+        setDonationAmount('');
+        setDonationError(null);
+    };
+
+    const handleConfirmDonation = async () => {
+        const amount = Number(donationAmount);
+        if (!amount || amount <= 0) {
+            setDonationError("Please enter a valid donation amount.");
+            return;
+        }
+
+        setIsSubmitting(true);
+        setDonationError(null);
+
+        try {
+
+            await createDonation({amount: amount, startup_id: startup!.id})
+            await mutateStartup();
+
+
+            handleCancelDonation();
+
+        } catch (error) {
+            setDonationError(error instanceof Error ? error.message : "An unknown error occurred.");
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
 
     if (isLoadingStartup || isLoadingUser) {
 
@@ -77,7 +121,7 @@ export default function Startup() {
                         <p className={styles['funding-goal-description']}>
                             Current funding: {startup?.current_funding}$ / {startup?.funding_goal}$
                         </p>
-                        <ProgressBar percentage={30}/>
+                        <ProgressBar percentage={startup!.current_funding * 100 / startup!.funding_goal}/>
                     </div>
                 </div>
 
@@ -97,10 +141,99 @@ export default function Startup() {
                 </div>
 
                 <div className={styles.div4}>
-                    <h3>Ready to contribute?</h3>
-                    <button className={styles['donate-button']}>
-                        Fund this Startup
-                    </button>
+                    {isDonating ? (
+                        <>
+                            <h3>Enter Your Contribution</h3>
+                            <div className={styles['donation-form']}>
+                                <TextField
+                                    label="Donation Amount"
+                                    type="number"
+                                    variant="outlined"
+                                    fullWidth
+                                    value={donationAmount}
+                                    onChange={(e) => setDonationAmount(e.target.value)}
+                                    InputProps={{
+                                        startAdornment: <InputAdornment position="start"
+                                                                        sx={{color: '#ffffff'}}>$</InputAdornment>,
+                                    }}
+                                    sx={{
+                                        width: "80%",
+                                        '& .MuiInputBase-input': {
+                                            color: '#ffffff',
+                                        },
+
+                                        '& .MuiInputLabel-root': {
+                                            color: '#8f9296',
+                                        },
+
+                                        '& .MuiInputLabel-root.Mui-focused': {
+                                            color: '#66fcf1',
+                                        },
+
+                                        '& .MuiOutlinedInput-root': {
+
+                                            '& fieldset': {
+                                                borderColor: '#45a29e',
+                                            },
+
+                                            '&:hover fieldset': {
+                                                borderColor: '#66fcf1',
+                                            },
+
+                                            '&.Mui-focused fieldset': {
+                                                borderColor: '#66fcf1',
+                                            },
+                                        },
+                                    }}
+                                />
+                                <div className={styles['donation-actions']}>
+
+                                    <Button
+                                        variant="outlined"
+                                        onClick={handleCancelDonation}
+                                        disabled={isSubmitting}
+                                        sx={{ // Custom themed "Cancel" button
+                                            flexGrow: 1,
+                                            fontWeight: 600,
+                                            borderColor: '#45a29e',
+                                            color: '#c5c6c7',
+                                            '&:hover': {
+                                                borderColor: '#66fcf1',
+                                                backgroundColor: 'rgba(102, 252, 241, 0.1)',
+                                            },
+                                        }}
+                                    >
+                                        Cancel
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        onClick={handleConfirmDonation}
+                                        disabled={isSubmitting}
+                                        sx={{ // Custom themed "Confirm" button
+                                            flexGrow: 1,
+                                            fontWeight: 600,
+                                            background: 'linear-gradient(to right, #45a29e, #66fcf1)',
+                                            color: '#0b0c10',
+                                            '&.Mui-disabled': { // Style for disabled state
+                                                background: '#2e3a48',
+                                                color: '#8f9296',
+                                            },
+                                        }}
+                                    >
+                                        {isSubmitting ? <CircularProgress size={24} color="inherit"/> : 'Confirm'}
+                                    </Button>
+                                </div>
+                                {donationError && <p className={styles['donation-error']}>{donationError}</p>}
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <h3>Ready to contribute?</h3>
+                            <button className={styles['donate-button']} onClick={handleFundClick}>
+                                Fund this Startup
+                            </button>
+                        </>
+                    )}
                 </div>
             </div>
         </div>

@@ -1,0 +1,77 @@
+
+
+.my-profile-page {
+    background-color: #0b0c10;
+    min-height: 100vh;
+}
+
+.profile-container {
+    color: #c5c6c7;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: transparent;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    box-sizing: border-box;
+}
+
+
+.profile-description {
+    background-color: #1f2833;
+    padding: 1.5rem 2rem;
+    border-radius: 16px;
+    border: 1px solid #2e3a48;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+}
+
+.description-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.description-text {
+    font-size: 1rem;
+    color: #c5c6c7;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.description-upper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #2e3a48;
+}
+
+.edit-description-button {
+    height: 2.5rem;
+    width: 8rem;
+}
+
+
+.bio-textfield :global(.MuiOutlinedInput-root) {
+    background-color: #2e3a48;
+    color: #c5c6c7;
+}
+
+.bio-textfield :global(.MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline) {
+    border-color: #45a29e;
+}
+.bio-textfield :global(.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline) {
+    border-color: #66fcf1;
+}
+.bio-textfield :global(.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline) {
+    border-color: #66fcf1;
+    border-width: 2px;
+}
+
+.bio-textfield :global(.MuiInputBase-input) {
+    color: #ffffff;
+}
+

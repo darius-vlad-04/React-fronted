@@ -1,4 +1,3 @@
-
 import "./StartupCard.css";
 import ProgressBar from "../ProgressBar/ProgressBar.tsx";
 import type {StartupInterface} from "../../models/startup-models/startupInterface.ts";

@@ -1,73 +1,100 @@
 import Navbar from "../../components/Navbar/Navbar.tsx";
-import styles from "./ExploreStartups.module.css"
+import styles from "./ExploreStartups.module.css";
 import {FaFilter, FaSearch} from "react-icons/fa";
 import {useShowcaseStartups} from "../../hooks/useShowcaseStartups.ts";
 import StartupCarousel from "../../components/StartupCarousel/StartupCarousel.tsx";
-import {useSearchStartups} from "../../hooks/useSearchStartups.ts";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import StartupExploreCard from "../../components/StartupExploreCard/StartupExploreCard.tsx";
 import FilterPanel, {type Filters} from "../../components/FilterPanel/FilterPanel.tsx";
+import {useFilteredStartups} from "../../hooks/useFilteredStartups.ts";
+import {useNavigate, useSearchParams} from "react-router-dom"; // The new hook
 
 export default function ExploreStartups() {
+    const [searchParams, setSearchParams] = useSearchParams();
+    const navigate = useNavigate();
+
+    const searchQuery = searchParams.get('q') || '';
+    const activeFilters: Filters | null = searchParams.has('sortBy')
+        ? {
+            sortBy: searchParams.get('sortBy') as Filters['sortBy'],
+            categories: searchParams.get('categories')?.split('-') || [],
+        }
+        : null;
 
 
-    const [searchTerm, setSearchTerm] = useState('');
-
-    const [searchQuery, setSearchQuery] = useState('');
-
+    const [searchTerm, setSearchTerm] = useState(searchQuery);
     const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
 
-    const [activeFilters, setActiveFilters] = useState<Filters | null>(null);
 
-    const {startups: mostFundedStartups, isLoading :isLoadingMostFunded, isErrorMostFunded} = useShowcaseStartups("most-donated");
+    const { startups: mostFundedStartups, isLoading: isLoadingMostFunded } = useShowcaseStartups("most-donated");
+    const { startups: newestStartups, isLoading: isLoadingNewest } = useShowcaseStartups("recent");
+    const { startups: gridStartups, isLoading: isLoadingGrid } = useFilteredStartups(activeFilters, searchQuery);
 
-    const {startups: newestStartups, isLoading: isLoadingNewestStartups, isErrorNewestStartups} = useShowcaseStartups("recent")
-
-    const {startups: searchedStartups, isLoading: isLoadingSearchStartups, isErrorSearchStartups} = useSearchStartups(searchQuery)
 
     const handleSearchKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             event.preventDefault();
-            setSearchQuery(searchTerm);
+            const newParams = new URLSearchParams();
+            if (searchTerm) {
+                newParams.set('q', searchTerm);
+            }
+
+            setSearchParams(newParams);
         }
     };
 
     const handleApplyFilters = (filters: Filters) => {
-        setSearchQuery('');
+        const newParams = new URLSearchParams();
+        newParams.set('sortBy', filters.sortBy);
+        if (filters.categories.length > 0) {
+            newParams.set('categories', filters.categories.join('-'));
+        }
+        setSearchParams(newParams);
         setSearchTerm('');
-        setActiveFilters(filters);
     };
 
     const clearAll = () => {
-        setSearchTerm('');
-        setSearchQuery('');
-        setActiveFilters(null);
+
+        navigate('/explore');
     };
 
 
-    const renderSearchResults = () => (
-        <section className={styles['startup-section']}>
-            <div className={styles['search-results-header']}>
-                <h2 className={styles['section-title']}>
-                    Search Results for "{searchQuery}"
-                </h2>
-                <button onClick={clearAll} className={styles['clear-search-button']}>Clear Search</button>
-            </div>
+    useEffect(() => {
+        setSearchTerm(searchQuery);
+    }, [searchQuery]);
 
-            {isLoadingSearchStartups ? (
-                <div className={styles['carousel-placeholder']}><p>Searching...</p></div>
-            ) : searchedStartups && searchedStartups.length > 0 ? (
-                <div className={styles['search-results-grid']}>
-                    {searchedStartups.map(startup => (
-                        <StartupExploreCard key={startup.id} startup={startup}/>
-                    ))}
+
+    const renderGridView = () => {
+        let title = "Results";
+        if (activeFilters && searchQuery) {
+            title = `Search Results for "${searchQuery}" (Filtered)`;
+        } else if (searchQuery) {
+            title = `Search Results for "${searchQuery}"`;
+        } else if (activeFilters) {
+            title = "Filtered Results";
+        }
+
+        return (
+            <section className={styles['startup-section']}>
+                <div className={styles['search-results-header']}>
+                    <h2 className={styles['section-title']}>{title}</h2>
+                    <button onClick={clearAll} className={styles['clear-search-button']}>Clear All</button>
                 </div>
-            ) : (
-                <p>No startups found matching your search.</p>
-            )}
-        </section>
-    );
 
+                {isLoadingGrid ? (
+                    <div className={styles['carousel-placeholder']}><p>Loading Results...</p></div>
+                ) : gridStartups && gridStartups.length > 0 ? (
+                    <div className={styles['search-results-grid']}>
+                        {gridStartups.map(startup => (
+                            <StartupExploreCard key={startup.id} startup={startup}/>
+                        ))}
+                    </div>
+                ) : (
+                    <p>No startups found. Try adjusting your search or filters.</p>
+                )}
+            </section>
+        );
+    };
 
     const renderDefaultView = () => (
         <>
@@ -79,27 +106,19 @@ export default function ExploreStartups() {
                     <StartupCarousel startups={mostFundedStartups}/>
                 )}
             </section>
-
             <section className={styles['startup-section']}>
                 <h2 className={styles['section-title']}>Newest Ventures</h2>
-                {isLoadingNewestStartups ? (
+                {isLoadingNewest ? (
                     <div className={styles['carousel-placeholder']}><p>Loading...</p></div>
                 ) : (
                     <StartupCarousel startups={newestStartups}/>
                 )}
             </section>
-
-            <section className={styles['startup-section']}>
-                <h2 className={styles['section-title']}>Trending in Technology</h2>
-                {isLoadingNewestStartups ? (
-                    <div className={styles['carousel-placeholder']}><p>Loading...</p></div>
-                ) : (
-                    "Carousel"
-                )}
-            </section>
         </>
     );
 
+
+    const isGridView = activeFilters || searchQuery;
 
     return (
         <div className={styles['page-wrapper']}>
@@ -116,7 +135,7 @@ export default function ExploreStartups() {
                         <input
                             type="text"
                             className={styles['search-input']}
-                            placeholder="Search for startups and press Enter..."
+                            placeholder="Search or filter results..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             onKeyDown={handleSearchKeyDown}
@@ -128,7 +147,8 @@ export default function ExploreStartups() {
                     </button>
                 </div>
 
-                {searchQuery ? renderSearchResults() : renderDefaultView()}
+
+                {isGridView ? renderGridView() : renderDefaultView()}
             </main>
         </div>
     );

@@ -11,3 +11,7 @@ body {
     font-family: Inter, sans-serif;
     color: white;
 }
+
+.body-no-scroll {
+    overflow: hidden;
+}

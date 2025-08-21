@@ -1,0 +1,83 @@
+
+.perk-card-container {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    min-height: 380px;
+    padding: 2.5rem;
+
+    background-color: #1f2833;
+    border: 2px solid #45a29e;
+
+    border-radius: 24px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+.perk-card-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(102, 252, 241, 0.2);
+}
+
+.perk-card-donation-amount {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #66fcf1;
+    margin: 0 0 0.5rem;
+    line-height: 1;
+}
+
+
+.perk-card-title {
+    font-size: 1.5rem !important;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0 0 1rem;
+}
+
+
+.perk-card-description {
+    font-size: 1rem !important;
+    line-height: 1.6;
+    color: #c5c6c7;
+    margin: 0;
+    font-weight: 400;
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 1rem;
+}
+
+
+.perk-card-description::-webkit-scrollbar {
+    width: 6px;
+}
+
+.perk-card-description::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.perk-card-description::-webkit-scrollbar-thumb {
+    background-color: #45a29e;
+    border-radius: 3px;
+}
+
+
+.perk-card-select-button {
+    margin-top: 1.5rem;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    background: linear-gradient(to right, #45a29e, #66fcf1);
+    color: #0b0c10;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.perk-card-select-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 252, 241, 0.25);
+}

@@ -8,6 +8,7 @@ import PasswordField from "../../components/CustomTextFields/PasswordFields.tsx"
 import Carousel from "../../components/AutomaticCarousel/Carousel.tsx";
 import {login} from "../../services/authService.ts";
 import {useNavigate} from "react-router-dom";
+import {toast, ToastContainer} from "react-toastify";
 
 
 export default function Login() {
@@ -15,6 +16,8 @@ export default function Login() {
     const [email, setEmail] = React.useState<string>('');
     const [password, setPassword] = React.useState<string>('');
     const [loading, setLoading] = React.useState<boolean>(false);
+
+    const notify = (message: string) => toast.error(message);
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -25,14 +28,28 @@ export default function Login() {
             console.log('Login successful:', response.data);
             navigate('/home');
         } catch (e) {
-            if (e instanceof Error)
-                console.log(e.message)
+            let errorMessage = e.response.data.error;
+            if (e instanceof Error) {
+                notify(errorMessage)
+            }
         } finally {
             setLoading(false);
         }
     }
     return (
         <div className="login-window">
+            <ToastContainer
+                position="bottom-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="dark"
+            />
             <div className="login-container">
                 <div className="left-login-side">
                     <Carousel></Carousel>

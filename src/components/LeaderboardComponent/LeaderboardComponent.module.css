@@ -1,0 +1,85 @@
+.leaderboardContainer {
+    background-color: #1f2833;
+    border: 1px solid #2e3a48;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.leaderboardRow {
+    display: grid;
+    grid-template-columns: 50px 2fr 1fr;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #2e3a48;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+}
+
+.leaderboardRow:last-child {
+    border-bottom: none;
+}
+
+.leaderboardRow:hover {
+    background-color: #2e3a48;
+}
+
+.header {
+    background-color: transparent;
+    color: #8f9296;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: default;
+}
+
+.header:hover {
+    background-color: transparent;
+}
+
+.rank {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #c5c6c7;
+    text-align: center;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #45a29e;
+}
+
+.name {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.metric {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #c5c6c7;
+    text-align: right;
+}
+
+.gold { color: #ffd700 !important; }
+.silver { color: #c0c0c0 !important; }
+.bronze { color: #cd7f32 !important; }
+
+
+.loadingContainer, .noResults {
+    text-align: center;
+    padding: 4rem;
+    color: #8f9296;
+    font-style: italic;
+}

@@ -9,6 +9,9 @@
     flex-direction: column;
     justify-content: space-between;
     transition: transform 0.2s ease, border-color 0.2s ease;
+    margin-top : 0.3rem;
+    margin-right:1rem;
+
 
 }
 
@@ -26,11 +29,11 @@
 }
 
 .startup-description-container {
-    max-height: 72px;
-    overflow-y: auto;
-    overflow-x: hidden;
+    height: 72px;
     margin-bottom: 1.5rem;
+
 }
+
 
 .startup-description {
     font-size: 0.95rem;
@@ -39,21 +42,15 @@
     margin: 0;
     word-wrap: break-word;
     overflow-wrap: break-word;
+
+
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
 }
 
 
-.startup-description-container::-webkit-scrollbar {
-    width: 6px;
-}
-
-.startup-description-container::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.startup-description-container::-webkit-scrollbar-thumb {
-    background-color: #45a29e;
-    border-radius: 3px;
-}
 
 .bottom-section {
     flex-shrink: 0;

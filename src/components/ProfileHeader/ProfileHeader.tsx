@@ -1,23 +1,23 @@
-import type { UserInterface } from "../../models/user-models/userInterface.ts";
+import type {UserInterface} from "../../models/user-models/userInterface.ts";
 import userAvatarPlaceholder from '../../assets/user-avatar.jpg';
-import "./ProfileHeader.css";
-import { formatDateToMonthYear } from "../../utils/dateFormatter.ts";
-import type { KeyedMutator } from "swr";
-import React, { useEffect, useRef, useState } from "react";
+import styles from "./ProfileHeader.module.css";
+import {formatDateToMonthYear} from "../../utils/dateFormatter.ts";
+import type {KeyedMutator} from "swr";
+import React, {useEffect, useRef, useState} from "react";
 
-
-import { TextField, Button, IconButton } from "@mui/material";
+import {TextField, Button, IconButton} from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import {editProfileInfo, uploadProfilePicture} from "../../services/userService.ts";
 import type {UserEditInterface} from "../../models/user-models/userEditInterface.ts";
-
+import type {StatInterface} from "../../models/stats-models/statInterface.ts";
 
 interface ProfileHeaderProps {
     user: UserInterface | undefined;
     mutateUser: KeyedMutator<UserInterface>;
+    stats : StatInterface | undefined
 }
 
-function ProfileHeader({ user, mutateUser }: ProfileHeaderProps) {
+function ProfileHeader({user, mutateUser , stats}: ProfileHeaderProps) {
     const BASE_BACKEND_URL = import.meta.env.VITE_API_URL;
     const imageUrl = `${BASE_BACKEND_URL}/uploads/${user?.profile_pic_path}`;
 
@@ -25,10 +25,8 @@ function ProfileHeader({ user, mutateUser }: ProfileHeaderProps) {
     const [isUploading, setIsUploading] = useState(false);
     const [uploadError, setUploadError] = useState<string | null>(null);
 
-
     const [isNameEditing, setIsNameEditing] = useState(false);
     const [name, setName] = useState(user?.name || "");
-
 
     useEffect(() => {
         if (user) {
@@ -64,38 +62,37 @@ function ProfileHeader({ user, mutateUser }: ProfileHeaderProps) {
         const newUserData: UserEditInterface = {
             name: name
         };
-
         try {
-
             await editProfileInfo(newUserData);
             await mutateUser();
             setIsNameEditing(false);
         } catch (error) {
             console.error("Failed to update name:", error);
-
         }
     };
 
     const memberSince = formatDateToMonthYear(user?.created_at.toString());
 
     return (
-        <div className="profile-header-container">
-            <div className="profile-top-info">
-                <div className="profile-avatar" onClick={handleAvatarClick}>
-                    <img src={user?.profile_pic_path === null ? userAvatarPlaceholder : imageUrl} alt={`${user?.name}'s profile`} />
-                    <div className="avatar-overlay">
-                        {isUploading ? <div className="spinner"></div> : <span>Upload Photo</span>}
+
+        <div className={styles['profile-header-container']}>
+            <div className={styles['profile-top-info']}>
+                <div className={styles['profile-avatar']} onClick={handleAvatarClick}>
+                    <img src={user?.profile_pic_path === null ? userAvatarPlaceholder : imageUrl}
+                         alt={`${user?.name}'s profile`}/>
+                    <div className={styles['avatar-overlay']}>
+                        {isUploading ? <div className={styles.spinner}></div> : <span>Upload Photo</span>}
                     </div>
                     <input
                         type="file"
                         ref={fileInputRef}
                         onChange={handleFileChange}
-                        style={{ display: 'none' }}
+                        style={{display: 'none'}}
                         accept="image/png, image/jpeg, image/gif"
                     />
                 </div>
-                <div className="profile-identity">
-                    <div className="name-editor">
+                <div className={styles['profile-identity']}>
+                    <div className={styles['name-editor']}>
                         {isNameEditing ? (
                             <>
                                 <TextField
@@ -103,47 +100,57 @@ function ProfileHeader({ user, mutateUser }: ProfileHeaderProps) {
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                     autoFocus
-                                    // Optional: save on Enter key press
                                     onKeyDown={(e) => {
-                                        if (e.key === 'Enter') {
-                                            handleSaveName();
-                                        }
+                                        if (e.key === 'Enter') handleSaveName();
+                                    }}
+                                    sx={{
+                                        '& .MuiInput-input': { color: '#ffffff' },
+                                        '& .MuiInput-underline:before': { borderBottomColor: '#45a29e' },
+                                        '& .MuiInput-underline:after': { borderBottomColor: '#66fcf1' },
                                     }}
                                 />
-                                <Button onClick={handleSaveName} size="small" sx={{ ml: 1 }}>Save</Button>
+                                <Button onClick={handleSaveName} size="small" sx={{ml: 1, color: '#66fcf1' }}>Save</Button>
                             </>
                         ) : (
                             <>
-                                <h1 className="user-name">{user?.name}</h1>
-                                <IconButton onClick={() => setIsNameEditing(true)} size="small" sx={{ ml: 1 }}>
-                                    <EditIcon fontSize="small" />
+                                <h1 className={styles['user-name']}>{user?.name}</h1>
+                                <IconButton
+                                    onClick={() => setIsNameEditing(true)}
+                                    size="small"
+                                    sx={{
+                                        ml: 1,
+                                        color: '#c5c6c7',
+                                        '&:hover': { color: '#66fcf1' }
+                                    }}
+                                >
+                                    <EditIcon fontSize="small"/>
                                 </IconButton>
                             </>
                         )}
                     </div>
-                    <p className="member-since">Member since: {memberSince}</p>
+                    <p className={styles['member-since']}>Member since: {memberSince}</p>
                 </div>
             </div>
 
-            <div className="profile-stats">
-                <div className="stat-item">
-                    <h3 className="stat-value">900</h3>
-                    <p className="stat-label">Startups Created</p>
+            <div className={styles['profile-stats']}>
+                <div className={styles['stat-item']}>
+                    <h3 className={styles['stat-value']}>{stats?.startups_created}</h3>
+                    <p className={styles['stat-label']}>Startups Created</p>
                 </div>
-                <div className="stat-item">
-                    <h3 className="stat-value">12</h3>
-                    <p className="stat-label">Startups Donated To</p>
+                <div className={styles['stat-item']}>
+                    <h3 className={styles['stat-value']}>{stats?.startups_donated_to}</h3>
+                    <p className={styles['stat-label']}>Startups Donated To</p>
                 </div>
-                <div className="stat-item">
-                    <h3 className="stat-value">$1.5M</h3>
-                    <p className="stat-label">Total Money Raised</p>
+                <div className={styles['stat-item']}>
+                    <h3 className={styles['stat-value']}>${stats?.money_raised}</h3>
+                    <p className={styles['stat-label']}>Total Money Raised</p>
                 </div>
-                <div className="stat-item">
-                    <h3 className="stat-value">$25,000</h3>
-                    <p className="stat-label">Total Donated</p>
+                <div className={styles['stat-item']}>
+                    <h3 className={styles['stat-value']}>${stats?.total_donated}</h3>
+                    <p className={styles['stat-label']}>Total Donated</p>
                 </div>
             </div>
-            </div>
+        </div>
     );
 }
 

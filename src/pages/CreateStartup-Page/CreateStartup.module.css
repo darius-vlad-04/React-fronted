@@ -1,6 +1,6 @@
 
 .create-startup-wrapper {
-    background-color: #f4f7f6;
+    background-color: #0b0c10;
     min-height: 100vh;
 }
 
@@ -15,17 +15,25 @@
     margin: 0 auto;
 }
 
+
 .form-section {
-    background-color: #ffffff;
+    background-color: #1f2833;
     padding: 2.5rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-radius: 16px;
+    border: 1px solid #2e3a48;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
 .form-section h3 {
-    margin: 0 0 1rem 0;
+    margin: 0 0 0.5rem 0;
     font-size: 1.8rem;
-    color: #1f2833;
+    color: #ffffff;
+}
+
+.form-subtitle {
+    margin: 0 0 1.5rem 0;
+    color: #c5c6c7;
+    line-height: 1.5;
 }
 
 
@@ -35,7 +43,6 @@
     gap: 1.5rem;
 }
 
-
 .div3 {
     display: flex;
     flex-direction: column;
@@ -43,23 +50,40 @@
 }
 
 
-.div1 {
-    background: #1f2833;
-}
 .div1 h3 {
     color: #66fcf1;
-}
-.div1 .form-subtitle {
-    margin: -1rem 0 0.5rem;
-    color: #d6d6d6;
 }
 
 
 .div2 {
-    justify-content: center;
-    text-align: center;
+    justify-content: flex-start;
+    text-align: left;
 }
 
+.preset-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+
+.preset-buttons .MuiButton-outlined {
+    border-color: #45a29e;
+    color: #c5c6c7;
+    font-weight: 600;
+}
+.preset-buttons .MuiButton-outlined:hover {
+    border-color: #66fcf1;
+    background-color: rgba(102, 252, 241, 0.1);
+}
+
+
+.preset-buttons .MuiButton-contained {
+    background-color: #66fcf1 !important;
+    color: #0b0c10 !important;
+    font-weight: 600;
+}
 
 .perks-grid-container {
     display: flex;
@@ -69,17 +93,32 @@
 }
 
 
-.preset-buttons {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
+.div4 {
+    justify-content: space-between;
 }
 
 .create-startup-button {
-    background: linear-gradient(to right, #1a73e8, #4285f4) !important;
+    background: linear-gradient(to right, #45a29e, #66fcf1) !important;
+    color: #0b0c10 !important;
     font-weight: bold !important;
     padding: 1rem !important;
     font-size: 1.1rem !important;
-    margin-top: auto;
+}
+.create-startup-button.Mui-disabled {
+    background: #2e3a48 !important;
+    color: #8f9296 !important;
+}
+
+.submit-error {
+    color: #f87171;
+    text-align: center;
+    font-weight: 500;
+    margin-top: 1rem;
+}
+
+.loading-container {
+    display: grid;
+    place-content: center;
+    min-height: 80vh;
+    color: #ffffff;
 }

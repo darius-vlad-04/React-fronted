@@ -27,14 +27,3 @@
 }
 
 
-.placeholder-container {
-    background-color: #1f2833;
-    min-height: 250px;
-    border-radius: 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #8f9296;
-    font-size: 1.2rem;
-    border: 1px dashed #2e3a48;
-}
